@@ -1,5 +1,5 @@
-import PageObjects.HomePageScooter;
-import PageObjects.OrderPageScooter;
+import page.objects.HomePageScooter;
+import page.objects.OrderPageScooter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,8 +7,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.concurrent.TimeUnit;
-import static PageObjects.HomePageScooter.URL_YANDEX;
+
+import static page.objects.HomePageScooter.URL_YANDEX;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
@@ -35,8 +37,8 @@ public class TestCasesOrderPageBigButton {
         COMM = comm;
     }
 
-    @Parameterized.Parameters
-    public static Object[][] getNumber () {
+    @Parameterized.Parameters(name = "Тестовые данные: {0} {1} {2} {3} {4} {5} {6} {7}")
+    public static Object[][] getNumber() {
         return new Object[][]{
                 {"Вероника", "Курохтина", "ул. Академическая д.36 кв.8", "Академическая", "89161234567", "11.01.2018", "сутки", "Приветы проверяющим =)"}
         };
@@ -44,7 +46,7 @@ public class TestCasesOrderPageBigButton {
 
     @Before
     public void testSetup() {
-        System.setProperty("webdriver.chrome.driver",  "C:/WebDriver/bin/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:/WebDriver/bin/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(URL_YANDEX);
@@ -59,13 +61,14 @@ public class TestCasesOrderPageBigButton {
 
         OrderPageScooter objOrderPage = new OrderPageScooter(driver);
         objOrderPage.closeCookieButton();
-        objOrderPage.orderPageFirstInput(FNAME,SNAME,ADDR,METRO,NUMBER);
+        objOrderPage.orderPageFirstInput(FNAME, SNAME, ADDR, METRO, NUMBER);
         objOrderPage.tapOnBlackCheckBox();
-        objOrderPage.orderPageSecondInput(DATE,TIME,COMM);
+        objOrderPage.orderPageSecondInput(DATE, TIME, COMM);
         objOrderPage.tapToButtonYes();
 
-        assertTrue("Window Order Completed - not found!",objOrderPage.waitForWindowOrderCompleted());
+        assertTrue("Window Order Completed - not found!", objOrderPage.waitForWindowOrderCompleted());
     }
+
     @Test
     public void testOrderWitSmallButton() {
 
@@ -74,16 +77,16 @@ public class TestCasesOrderPageBigButton {
 
         OrderPageScooter objOrderPage = new OrderPageScooter(driver);
         objOrderPage.closeCookieButton();
-        objOrderPage.orderPageFirstInput(FNAME,SNAME,ADDR,METRO,NUMBER);
+        objOrderPage.orderPageFirstInput(FNAME, SNAME, ADDR, METRO, NUMBER);
         objOrderPage.tapOnGreyCheckBox();
-        objOrderPage.orderPageSecondInput(DATE,TIME,COMM);
+        objOrderPage.orderPageSecondInput(DATE, TIME, COMM);
         objOrderPage.tapToButtonYes();
 
-        assertTrue("Window Order Completed - not found!",objOrderPage.waitForWindowOrderCompleted());
+        assertTrue("Window Order Completed - not found!", objOrderPage.waitForWindowOrderCompleted());
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
 }
